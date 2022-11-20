@@ -1,0 +1,1 @@
+INSERT INTO rol(id_rol, rol) VALUES('a56ca506-997f-499f-a655-7edca3d34f26'::uuid, 'ROLE_USER');
