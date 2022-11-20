@@ -17,7 +17,6 @@ public class LeasingHeader implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //Atributos
-    //-- Datos de Prestamo
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -27,56 +26,60 @@ public class LeasingHeader implements Serializable {
     @Column(name = "id_leasingheader")
     private UUID idLeasingHeader;
 
+    //-- Datos de Prestamo
     @Column(name = "precio_venta")
-    private double precioVenta;
+    private Double precioVenta;
 
-    @Column(name = "cantidad_anio")
-    private int cantidadAnio;
+    @Column(name = "cantidad_año")
+    private Integer cantidadAnio;
 
     @Column(name = "frecuencia_pago")
-    private int frecuenciaPago;
+    private Integer frecuenciaPago;
+
+    @Column(name = "dias_año")
+    private Integer diasAnio;
 
     @Column(name = "porcentaje_tea")
-    private double porcentajeTEA;
+    private Double porcentajeTEA;
 
     @Column(name = "porcentaje_igv")
-    private double porcentajeIGV;
+    private Double porcentajeIGV;
 
     @Column(name = "porcentaje_impuestorenta")
-    private double porcentajeImpuestoRenta;
+    private Double porcentajeImpuestoRenta;
 
     @Column(name = "porcentaje_recompra")
-    private double porcentajeRecompra;
+    private Double porcentajeRecompra;
 
     //-- Datos de Costes/Gastos Iniciales
     @Column(name = "costo_notarial")
-    private double costoNotarial;
+    private Double costoNotarial;
 
     @Column(name = "costo_registral")
-    private double costoRegistral;
+    private Double costoRegistral;
 
     @Column(name = "tasacion")
-    private double tasacion;
+    private Double tasacion;
 
     @Column(name = "comision_estudio")
-    private double comisionEstudio;
+    private Double comisionEstudio;
 
     @Column(name = "comision_activacion")
-    private double comisionActivacion;
+    private Double comisionActivacion;
 
     //-- Datos de Costes/Gastos Iniciales
     @Column(name = "comision_periodica")
-    private double comisionPeriodica;
+    private Double comisionPeriodica;
 
     @Column(name = "porcentaje_seguroriesgo")
-    private double porcentajeSeguroRiesgo;
+    private Double porcentajeSeguroRiesgo;
 
     //-- Datos Costo Oportunidad;
     @Column(name = "tasadescuento_ks")
-    private double tasaDescuentoKs;
+    private Double tasaDescuentoKs;
 
     @Column(name = "tasadescuento_wacc")
-    private double tasaDescuentoWACC;
+    private Double tasaDescuentoWACC;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_leasing")
@@ -86,14 +89,16 @@ public class LeasingHeader implements Serializable {
     public LeasingHeader() {
     }
 
-    public LeasingHeader(double precioVenta, int cantidadAnio, int frecuenciaPago, double porcentajeTEA,
-                         double porcentajeIGV, double porcentajeImpuestoRenta, double porcentajeRecompra,
-                         double costoNotarial, double costoRegistral, double tasacion, double comisionEstudio,
-                         double comisionActivacion, double comisionPeriodica, double porcentajeSeguroRiesgo,
-                         double tasaDescuentoKs, double tasaDescuentoWACC, Leasing leasingLeasingHeader) {
+    public LeasingHeader(Double precioVenta, Integer cantidadAnio, Integer frecuenciaPago, Integer diasAnio,
+                         Double porcentajeTEA, Double porcentajeIGV, Double porcentajeImpuestoRenta,
+                         Double porcentajeRecompra, Double costoNotarial, Double costoRegistral, Double tasacion,
+                         Double comisionEstudio, Double comisionActivacion, Double comisionPeriodica,
+                         Double porcentajeSeguroRiesgo, Double tasaDescuentoKs, Double tasaDescuentoWACC,
+                         Leasing leasingLeasingHeader) {
         this.precioVenta = precioVenta;
         this.cantidadAnio = cantidadAnio;
         this.frecuenciaPago = frecuenciaPago;
+        this.diasAnio = diasAnio;
         this.porcentajeTEA = porcentajeTEA;
         this.porcentajeIGV = porcentajeIGV;
         this.porcentajeImpuestoRenta = porcentajeImpuestoRenta;
@@ -110,15 +115,16 @@ public class LeasingHeader implements Serializable {
         this.leasingLeasingHeader = leasingLeasingHeader;
     }
 
-    public LeasingHeader(UUID idLeasingHeader, double precioVenta, int cantidadAnio, int frecuenciaPago,
-                         double porcentajeTEA, double porcentajeIGV, double porcentajeImpuestoRenta,
-                         double porcentajeRecompra, double costoNotarial, double costoRegistral,
-                         double tasacion, double comisionEstudio, double comisionActivacion, double comisionPeriodica,
-                         double porcentajeSeguroRiesgo, double tasaDescuentoKs, double tasaDescuentoWACC) {
+    public LeasingHeader(UUID idLeasingHeader, Double precioVenta, Integer cantidadAnio, Integer frecuenciaPago,
+                         Integer diasAnio, Double porcentajeTEA, Double porcentajeIGV, Double porcentajeImpuestoRenta,
+                         Double porcentajeRecompra, Double costoNotarial, Double costoRegistral, Double tasacion,
+                         Double comisionEstudio, Double comisionActivacion, Double comisionPeriodica,
+                         Double porcentajeSeguroRiesgo, Double tasaDescuentoKs, Double tasaDescuentoWACC) {
         this.idLeasingHeader = idLeasingHeader;
         this.precioVenta = precioVenta;
         this.cantidadAnio = cantidadAnio;
         this.frecuenciaPago = frecuenciaPago;
+        this.diasAnio = diasAnio;
         this.porcentajeTEA = porcentajeTEA;
         this.porcentajeIGV = porcentajeIGV;
         this.porcentajeImpuestoRenta = porcentajeImpuestoRenta;

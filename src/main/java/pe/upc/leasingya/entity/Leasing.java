@@ -40,6 +40,9 @@ public class Leasing implements Serializable {
     @OneToOne(mappedBy = "leasingLeasingHeader")
     private LeasingHeader leasingheaderLeasing;
 
+    @OneToOne(mappedBy = "leasingLeasingResultado")
+    private LeasingResultado leasingresultadoLeasing;
+
     //Constructores
     public Leasing() {
     }

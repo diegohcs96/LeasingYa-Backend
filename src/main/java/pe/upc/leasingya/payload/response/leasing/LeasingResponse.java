@@ -15,6 +15,8 @@ public class LeasingResponse {
     private String nombreLeasing;
     private LocalDateTime fecharegistroLeasing;
 
+    private LeasingHeaderResponse datosentradaLeasing;
+
     //Constructores
     public LeasingResponse() {
     }
