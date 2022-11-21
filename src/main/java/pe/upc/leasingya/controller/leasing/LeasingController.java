@@ -99,6 +99,17 @@ public class LeasingController {
 
                 leasingHeaderService.Guardar(leasingheader);
 
+                //Iniciando Calculo de Resultados
+                //-- IGV
+                Double igv = (leasingRequest.getDatosLeasing().getPrecioVenta() *
+                        (1 + (leasingRequest.getDatosLeasing().getPorcentajeIGV() / 100)));
+
+                //-- Valor Venta Activo
+                Double valorVentaActivo = (leasingRequest.getDatosLeasing().getPrecioVenta() - igv);
+
+                //-- Monto Leasing
+                //Double
+
                 return new ResponseEntity<>(new MessageResponse("Se registró el Leasing correctamente."),
                         HttpStatus.ACCEPTED);
             } else {

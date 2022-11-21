@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "leasingheader")
+@Table(name = "leasingresultado")
 @Getter
 @Setter
 public class LeasingResultado implements Serializable {
