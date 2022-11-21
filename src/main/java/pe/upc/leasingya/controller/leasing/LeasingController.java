@@ -6,11 +6,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.upc.leasingya.entity.Leasing;
 import pe.upc.leasingya.entity.LeasingHeader;
+import pe.upc.leasingya.entity.LeasingResultado;
 import pe.upc.leasingya.entity.Usuario;
 import pe.upc.leasingya.payload.request.leasing.LeasingRequest;
 import pe.upc.leasingya.payload.response.MessageResponse;
 import pe.upc.leasingya.payload.response.leasing.LeasingResponse;
 import pe.upc.leasingya.service.ILeasingHeaderService;
+import pe.upc.leasingya.service.ILeasingResultadoService;
 import pe.upc.leasingya.service.ILeasingService;
 import pe.upc.leasingya.service.IUsuarioService;
 import pe.upc.leasingya.validation.LeasingValidation;
@@ -31,12 +33,15 @@ public class LeasingController {
 
     final ILeasingHeaderService leasingHeaderService;
 
+    final ILeasingResultadoService leasingResultadoService;
+
     final IUsuarioService usuarioService;
 
     public LeasingController(ILeasingService leasingService, ILeasingHeaderService leasingHeaderService,
-                             IUsuarioService usuarioService) {
+                             ILeasingResultadoService leasingResultadoService, IUsuarioService usuarioService) {
         this.leasingService = leasingService;
         this.leasingHeaderService = leasingHeaderService;
+        this.leasingResultadoService = leasingResultadoService;
         this.usuarioService = usuarioService;
     }
 
@@ -101,14 +106,60 @@ public class LeasingController {
 
                 //Iniciando Calculo de Resultados
                 //-- IGV
-                Double igv = (leasingRequest.getDatosLeasing().getPrecioVenta() *
-                        (1 + (leasingRequest.getDatosLeasing().getPorcentajeIGV() / 100)));
+                Double igv = (leasingRequest.getDatosLeasing().getPrecioVenta() /
+                        (1 + (leasingRequest.getDatosLeasing().getPorcentajeIGV() / 100)) *
+                        (leasingRequest.getDatosLeasing().getPorcentajeIGV() / 100));
 
                 //-- Valor Venta Activo
-                Double valorVentaActivo = (leasingRequest.getDatosLeasing().getPrecioVenta() - igv);
+                Double valorVentaActivo = leasingRequest.getDatosLeasing().getPrecioVenta() - igv;
 
                 //-- Monto Leasing
-                //Double
+                Double montoLeasing = valorVentaActivo + (
+                        leasingRequest.getDatosLeasing().getCostoNotarial() +
+                        leasingRequest.getDatosLeasing().getCostoRegistral() +
+                        leasingRequest.getDatosLeasing().getTasacion() +
+                        leasingRequest.getDatosLeasing().getComisionEstudio() +
+                        leasingRequest.getDatosLeasing().getComisionActivacion());
+
+                //-- Porcentaje TEP
+                Double porcentajeTEP =
+                        (Math.pow(1 + (leasingRequest.getDatosLeasing().getPorcentajeTEA() / 100),
+                        (Double.valueOf(leasingRequest.getDatosLeasing().getFrecuenciaPago()) / Double.valueOf(leasingRequest.getDatosLeasing().getDiasAnio())))
+                        - 1);
+
+                //-- Cuotas Año
+                Integer cuotasAnio = (int) Math.round((Double.valueOf(leasingRequest.getDatosLeasing().getDiasAnio())) /
+                        (Double.valueOf(leasingRequest.getDatosLeasing().getFrecuenciaPago())));
+
+                //-- Total Cuotas
+                Integer totalCuotas = cuotasAnio * leasingRequest.getDatosLeasing().getCantidadAnio();
+
+                //-- Seguro Riesgo
+                Double seguroRiesgo = (leasingRequest.getDatosLeasing().getPorcentajeSeguroRiesgo() / 100) *
+                        leasingRequest.getDatosLeasing().getPrecioVenta() / cuotasAnio;
+
+                LeasingResultado leasingresultado = new LeasingResultado(
+                        igv,
+                        valorVentaActivo,
+                        montoLeasing,
+                        porcentajeTEP,
+                        cuotasAnio,
+                        totalCuotas,
+                        seguroRiesgo,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        leasing
+                );
+
+                leasingResultadoService.GuardarLeasingResultado(leasingresultado);
 
                 return new ResponseEntity<>(new MessageResponse("Se registró el Leasing correctamente."),
                         HttpStatus.ACCEPTED);

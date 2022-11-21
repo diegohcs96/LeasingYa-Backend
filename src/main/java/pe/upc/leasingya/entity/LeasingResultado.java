@@ -89,6 +89,32 @@ public class LeasingResultado implements Serializable {
     public LeasingResultado() {
     }
 
+    public LeasingResultado(Double igv, Double valorVentaActivo, Double montoLeasing, Double porcentajeTEP,
+                            Integer cuotasAnio, Integer totalCuotas, Double seguroRiesgo, Double intereses,
+                            Double amortizacionCapital, Double totalSeguroRiesgo, Double comisionesPeriodicas,
+                            Double recompra, Double desembolsoTotal, Double porcentajeTCEAFlujoBruto,
+                            Double porcentajeTCEAFlujoNeto, Double porcentajeVANFlujoBruto, Double porcentajeVANFlujoNeto,
+                            Leasing leasingLeasingResultado) {
+        this.igv = igv;
+        this.valorVentaActivo = valorVentaActivo;
+        this.montoLeasing = montoLeasing;
+        this.porcentajeTEP = porcentajeTEP;
+        this.cuotasAnio = cuotasAnio;
+        this.totalCuotas = totalCuotas;
+        this.seguroRiesgo = seguroRiesgo;
+        this.intereses = intereses;
+        this.amortizacionCapital = amortizacionCapital;
+        this.totalSeguroRiesgo = totalSeguroRiesgo;
+        this.comisionesPeriodicas = comisionesPeriodicas;
+        this.recompra = recompra;
+        this.desembolsoTotal = desembolsoTotal;
+        this.porcentajeTCEAFlujoBruto = porcentajeTCEAFlujoBruto;
+        this.porcentajeTCEAFlujoNeto = porcentajeTCEAFlujoNeto;
+        this.porcentajeVANFlujoBruto = porcentajeVANFlujoBruto;
+        this.porcentajeVANFlujoNeto = porcentajeVANFlujoNeto;
+        this.leasingLeasingResultado = leasingLeasingResultado;
+    }
+
     public LeasingResultado(UUID idLeasingResultado, Double igv, Double valorVentaActivo, Double montoLeasing,
                             Double porcentajeTEP, Integer cuotasAnio, Integer totalCuotas, Double seguroRiesgo,
                             Double intereses, Double amortizacionCapital, Double totalSeguroRiesgo,
