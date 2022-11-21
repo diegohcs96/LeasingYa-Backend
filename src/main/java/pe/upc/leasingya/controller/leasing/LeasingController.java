@@ -111,21 +111,23 @@ public class LeasingController {
                         (leasingRequest.getDatosLeasing().getPorcentajeIGV() / 100));
 
                 //-- Valor Venta Activo
-                Double valorVentaActivo = leasingRequest.getDatosLeasing().getPrecioVenta() - igv;
+                double valorVentaActivo = leasingRequest.getDatosLeasing().getPrecioVenta() - igv;
 
                 //-- Monto Leasing
                 Double montoLeasing = valorVentaActivo + (
                         leasingRequest.getDatosLeasing().getCostoNotarial() +
-                        leasingRequest.getDatosLeasing().getCostoRegistral() +
-                        leasingRequest.getDatosLeasing().getTasacion() +
-                        leasingRequest.getDatosLeasing().getComisionEstudio() +
-                        leasingRequest.getDatosLeasing().getComisionActivacion());
+                                leasingRequest.getDatosLeasing().getCostoRegistral() +
+                                leasingRequest.getDatosLeasing().getTasacion() +
+                                leasingRequest.getDatosLeasing().getComisionEstudio() +
+                                leasingRequest.getDatosLeasing().getComisionActivacion());
 
                 //-- Porcentaje TEP
                 Double porcentajeTEP =
-                        (Math.pow(1 + (leasingRequest.getDatosLeasing().getPorcentajeTEA() / 100),
-                        (Double.valueOf(leasingRequest.getDatosLeasing().getFrecuenciaPago()) / Double.valueOf(leasingRequest.getDatosLeasing().getDiasAnio())))
-                        - 1);
+                        ((Math.pow(
+                                1 + (leasingRequest.getDatosLeasing().getPorcentajeTEA() / 100),
+                                (Double.valueOf(leasingRequest.getDatosLeasing().getFrecuenciaPago()) /
+                                        Double.valueOf(leasingRequest.getDatosLeasing().getDiasAnio())))
+                                - 1) * 100);
 
                 //-- Cuotas Año
                 Integer cuotasAnio = (int) Math.round((Double.valueOf(leasingRequest.getDatosLeasing().getDiasAnio())) /
